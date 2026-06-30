@@ -1,0 +1,229 @@
+{% extends 'base_admin.html' %}
+{% block content %}
+
+<style>
+
+
+    /* ===== CARD ===== */
+
+.merma-card{
+    background: var(--bg-card);
+    border-radius: var(--radius-md);
+    padding:14px 16px;
+    margin-bottom:18px;
+
+    border:1px solid var(--border-color);
+
+    box-shadow: 0 2px 8px rgba(0,0,0,.08);
+
+    color: var(--text-color);
+
+    transition: background var(--transition-base),
+                color var(--transition-base),
+                border var(--transition-base);
+}
+
+
+/* ===== FILAS ===== */
+
+.merma-row{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:10px;
+    font-size:15px;
+    gap:10px;
+}
+
+.merma-left,
+.merma-right{
+    display:flex;
+    align-items:center;
+    gap:12px;
+}
+
+
+/* ===== TEXTO ===== */
+
+.merma-producto{
+    font-size:17px;
+    margin-bottom:12px;
+    color: var(--text-color);
+
+
+    font-weight:600;
+}
+
+.merma-motivo{
+    font-size:14px;
+    margin-bottom:8px;
+    color: var(--text-color);
+
+
+    opacity:.95;
+}
+
+
+/* ===== FOOTER ===== */
+
+.merma-bottom{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+
+    font-size:18px;
+    font-weight:500;
+
+    color: var(--text-color);
+}
+
+.merma-total{
+    font-size:20px;
+    font-weight:700;
+}
+
+
+/* ===== ICONOS ===== */
+
+.merma-card i{
+    font-size:15px;
+    color: var(--text-color);
+    opacity:.9;
+}
+
+
+/* ===== BOTON FLOTANTE ===== */
+
+.btn-flotante{
+    position:fixed;
+    right:28px;
+    bottom:28px;
+
+    width:88px;
+    height:88px;
+
+    border-radius:50%;
+
+    background:#b6a15a;
+    color:white;
+
+    font-size:55px;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    text-decoration:none;
+
+    box-shadow:0 3px 8px rgba(0,0,0,.25);
+
+    z-index:999;
+}
+
+.btn-flotante:hover{
+    background:#a99348;
+    color:white;
+}
+
+
+/* ===== DARK MODE EXTRA ===== */
+
+.dark-mode .merma-card{
+    box-shadow: 0 2px 10px rgba(0,0,0,.35);
+}
+
+.dark-mode .merma-card i{
+    color:#d8d8e8;
+}
+
+
+
+/* ===== RESPONSIVE ===== */
+
+@media (max-width:768px){
+
+    .merma-row{
+        font-size:14px;
+    }
+
+    .merma-producto{
+        font-size:16px;
+    }
+
+    .merma-motivo{
+        font-size:13px;
+    }
+
+    .merma-bottom{
+        font-size:17px;
+    }
+
+    .merma-total{
+        font-size:18px;
+    }
+
+}
+</style>
+
+<div class="container-fluid py-3">
+
+<div class="row">
+
+    {% for merma in mermas %}
+
+    <div class="col-12 col-sm-6 col-md-4 col-xl-3 mb-3">
+
+        <div class="merma-card">
+
+            <div class="merma-row">
+                <div class="merma-left">
+                    <i class="bi bi-key"></i>
+                    <span>{{ merma.clave|default:"Sin Clave" }}</span>
+                </div>
+
+                <div class="merma-right">
+                    <i class="bi bi-calendar-event"></i>
+                    <span>{{ merma.fecha|date:"d-m-Y H:i:s" }}</span>
+                </div>
+            </div>
+
+            <div class="merma-row">
+                <div class="merma-left">
+                    <i class="bi bi-box-seam"></i>
+                    <span>{{ merma.producto.nombre }}</span>
+                </div>
+
+                <div class="merma-right">
+                    <i class="bi bi-rulers"></i>
+                    <span>{{ merma.producto.unidad|default:"Sin Unidad" }}</span>
+                </div>
+            </div>
+
+            <div class="merma-motivo">
+                <i class="bi bi-info-circle me-2"></i>
+                {{ merma.motivo }}
+            </div>
+
+            <div class="merma-bottom">
+                <span>#{{ merma.cantidad|floatformat:2 }}</span>
+
+                <span class="merma-total">
+                    ${{ merma.total|floatformat:2 }}
+                </span>
+            </div>
+
+        </div>
+
+    </div>
+
+    {% endfor %}
+
+</div>  
+
+</div>
+
+<a href="{% url 'inventario:merma_create' %}" class="btn-flotante">
+    +
+</a>
+
+{% endblock %}

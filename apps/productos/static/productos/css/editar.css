@@ -1,0 +1,129 @@
+.card {
+    max-width: 700px;
+    margin: 10px auto 0;
+    background: var(--bg-card);
+    color: var(--text-color);
+    border: 1px solid var(--border-color);
+}
+
+.card-body {
+    background: transparent;
+}
+
+.editando {
+    border-color: #ffc107 !important;
+    box-shadow: 0 0 0 2px rgba(255,193,7,.25) !important;
+}
+
+.guardado {
+    border-color: #198754 !important;
+    box-shadow: 0 0 0 2px rgba(25,135,84,.25) !important;
+}
+
+.upload-box {
+    position: relative;
+    width: 100%;
+    height: 350px;
+    border-radius: 25px;
+    background: var(--bg-main);
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.preview {
+    width: 100%;
+    height: 100%;
+    border: 5px solid transparent;
+    border-radius: 20px;
+    background: var(--bg-card);
+    transition: border-color .2s ease, box-shadow .2s ease;
+}
+
+.upload-placeholder {
+    width: 70%;
+    max-width: 400px;
+    opacity: 0.4;
+}
+
+.upload-actions {
+    position: absolute;
+    bottom: 20px;
+    left: 0;
+    right: 0;
+    display: flex;
+    justify-content: space-between;
+    padding: 0 20px;
+}
+
+.circle-btn {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    border: none;
+    background: #0099ff;
+    color: white;
+    font-size: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    box-shadow: 0 4px 10px rgba(0,0,0,.2);
+}
+
+form label {
+    color: var(--text-color);
+}
+
+form input,
+form select,
+form textarea {
+    background: var(--bg-main);
+    color: var(--text-color);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-sm);
+}
+
+form input::placeholder,
+form textarea::placeholder {
+    color: #9aa0a6;
+}
+
+form input:focus,
+form select:focus,
+form textarea:focus {
+    background: var(--bg-main);
+    color: var(--text-color);
+    border-color: #4c8bf5;
+    box-shadow: 0 0 0 0.2rem rgba(76,139,245,.25);
+}
+
+.dark-mode .card {
+    background: var(--bg-card);
+}
+
+.dark-mode input,
+.dark-mode select,
+.dark-mode textarea {
+    background: #2b2b3d !important;
+    color: #fff !important;
+    border-color: rgba(255,255,255,.12) !important;
+}
+
+.dark-mode input::placeholder,
+.dark-mode textarea::placeholder {
+    color: var(--text-sidebar);
+}
+
+.dark-mode .upload-box {
+    background: var(--bg-main);
+}
+
+.dark-mode .preview {
+    background: var(--bg-card);
+}
+
+.dark-mode .circle-btn {
+    box-shadow: 0 4px 10px rgba(255,255,255,.12);
+}

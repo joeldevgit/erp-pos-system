@@ -1,0 +1,43 @@
+:root {
+    --bg-main: #f4f6f9;
+    --bg-sidebar: #343a40;
+    --bg-topbar: #032559;
+
+    --text-color: #212529;
+    --text-inverse: #ffffff;
+    --text-sidebar: #c2c7d0;
+
+    --hover-bg: rgba(0, 0, 0, 0.05);
+    --border-color: rgba(0, 0, 0, 0.1);
+
+    --sidebar-width: 500px;
+    --sidebar-z: 3000;
+    --overlay-z: 2500;
+    --topbar-z: 2000;
+
+    --radius-sm: 12px;
+    --radius-md: 14px;
+
+    --transition-fast: .2s ease;
+    --transition-base: .3s ease;
+
+    --bg-card: #ffffff;   
+
+}
+
+.dark-mode {
+    --bg-main: #171722;
+    --bg-sidebar: #12121b;
+    --bg-topbar: #09093a;
+    --bg-card: #41417a;
+
+
+    --text-color: #e4e6eb;
+    --text-sidebar: #b5b5c3;
+
+    --hover-bg: rgba(255, 255, 255, 0.15);
+    --border-color: rgba(255, 255, 255, 0.12);
+
+    --bg-card: #20202e;
+
+}

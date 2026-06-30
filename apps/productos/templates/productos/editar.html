@@ -1,0 +1,249 @@
+{% extends 'base_admin.html' %}
+{% load static %}
+
+{% block content %}
+
+<link rel="stylesheet" href="{% static 'productos/css/editar.css' %}">
+
+
+
+<form id="productoForm" method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+
+    {% if form.errors %}
+    <div class="alert alert-danger">
+        {{ form.errors }}
+    </div>
+    {% endif %}
+
+    {% if precios_formset.errors %}
+    <div class="alert alert-danger">
+        {{ precios_formset.errors }}
+    </div>
+    {% endif %}
+
+    {% if caducidades_formset.errors %}
+    <div class="alert alert-danger">
+        {{ caducidades_formset.errors }}
+    </div>
+    {% endif %}
+
+
+    <!-- CARD 1 IMAGEN -->
+    <div class="card mb-2">
+        <div class="card-body">
+
+            <h5 class="card-title mb-3">Imagen</h5>
+
+            <div class="upload-box">
+
+                <!-- PREVIEW -->
+                <img id="preview"
+                    class="preview {% if not producto.imagen %}d-none{% endif %}"
+                    {% if producto.imagen %}
+                        src="{{ producto.imagen.url }}"
+                    {% endif %}>
+
+                <!-- PLACEHOLDER -->
+                <img id="placeholder"
+                    class="upload-placeholder {% if producto.imagen %}d-none{% endif %}"
+                    src="https://cdn-icons-png.flaticon.com/512/1829/1829586.png">
+
+                <!-- INPUT -->
+                <input type="file"
+                    id="id_imagen"
+                    name="imagen"
+                    accept="image/*"
+                    hidden>
+
+                <!-- BOTONES -->
+                <div class="upload-actions">
+
+                    <button type="button"
+                            class="circle-btn"
+                            onclick="eliminarImagen()">
+                        🗑
+                    </button>
+
+                    <button type="button"
+                            class="circle-btn"
+                            onclick="document.getElementById('id_imagen').click()">
+                        🖼
+                    </button>
+
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+
+
+
+    <!-- CARD 2 PRECIOS -->
+    <div class="card">
+        <div class="card-body">
+
+            <div class="row">
+
+                <div class="col-md-12 mb-3">
+                    <label>Nombre</label>
+                    {{ form.nombre }}
+                </div>
+
+                <div class="col-md-6 col-6 mb-3">
+                    <label>Precio compra</label>
+                    {{ form.precio_compra }}
+                </div>
+
+                <div class="col-md-6 col-6 mb-3">
+                    <label>Costo Promedio</label>
+
+                    <input type="text"
+                        class="form-control"
+                        value="{{ producto.precio_compra }}"
+                        readonly>
+                </div>
+
+                <div class="col-md-12 mb-3">
+                    <label>Precio venta</label>
+                    {{ form.precio_venta }}
+                </div>
+
+            </div>
+
+            <hr>
+
+            <div class="d-flex justify-content-between align-items-center mb-2">
+                <label class="fw-bold">Precios adicionales</label>
+
+                <button type="button"
+                        class="btn btn-sm btn-primary"
+                        onclick="agregarPrecio()">
+                    +
+                </button>
+            </div>
+
+            {{ precios_formset.management_form }}
+
+            <div id="precios-container">
+                {% for f in precios_formset %}
+                <div class="border rounded p-2 mb-2">
+                    {{ f.id }}
+
+                    <div class="row g-2">
+                        <div class="col-md-6">
+                            {{ f.nombre }}
+                        </div>
+
+                        <div class="col-md-5">
+                            {{ f.precio }}
+                        </div>
+
+                        <div class="col-md-1">
+                            {% if f.instance.pk %}
+                                {{ f.DELETE }}
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+
+        </div>
+    </div>
+
+    <!-- CARD 3 DATOS -->
+    <div class="card">
+        <div class="card-body">
+
+            <div class="row">
+
+                <div class="col-md-12 col-12 mb-3">
+                    <label>Código</label>
+                    {{ form.codigo }}
+                </div>
+
+                <div class="col-md-6 col-6 mb-3">
+                    <label>Stock</label>
+                    {{ form.stock }}
+                </div>
+
+                <div class="col-md-6 col-6 mb-3">
+                    <label>Stock mínimo</label>
+                    {{ form.stock_minimo }}
+                </div>
+
+                <div class="col-md-12 mb-3">
+                    <label>Unidad</label>
+                    {{ form.unidad }}
+                </div>
+
+                <div class="col-md-12 mb-3">
+                    <label>Categoría</label>
+                    {{ form.categoria }}
+                </div>
+
+                <div class="col-md-12 mb-3">
+                    <label>Información Adicional</label>
+                    {{ form.informacion_adicional }}
+                </div>
+
+                <div class="col-md-12 mb-3">
+
+                    <div class="d-flex justify-content-between align-items-center mb-2">
+                        <label class="fw-bold">Caducidad</label>
+
+                        <button type="button"
+                                class="btn btn-sm btn-success"
+                                onclick="agregarCaducidad()">
+                            +
+                        </button>
+                    </div>
+
+                    {{ caducidades_formset.management_form }}
+
+                    <div id="caducidades-container">
+                        {% for f in caducidades_formset %}
+
+                        <div class="border rounded p-2 mb-2">
+
+                            {{ f.id }}
+
+                            <div class="row g-2">
+
+                                <div class="col-md-4">
+                                    {{ f.lote }}
+                                </div>
+
+                                <div class="col-md-4">
+                                    {{ f.fecha_caducidad }}
+                                </div>
+
+                                <div class="col-md-3">
+                                    {{ f.informacion }}
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                        {% endfor %}
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+
+</form>
+
+
+
+<script>
+    window.PRODUCTOS_DELETE_URL = "{% url 'productos:producto_delete' producto.id %}";
+</script>
+<script src="{% static 'productos/js/editar.js' %}"></script>
+{% endblock %}

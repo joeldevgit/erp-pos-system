@@ -1,0 +1,17 @@
+.modal-backdrop {
+    position: fixed !important;
+    inset: 0 !important;
+    width: 100vw !important;
+    height: 100vh !important;
+    background-color: #00000097 !important;
+    opacity: 0.85 !important;
+    z-index: 9998 !important;
+}
+
+.modal {
+    z-index: 9999 !important;
+}
+
+body.modal-open .overlay {
+    display: none !important;
+}

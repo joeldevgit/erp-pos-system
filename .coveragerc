@@ -1,0 +1,22 @@
+[run]
+source = apps
+omit =
+    */migrations/*
+    */tests/*
+    */test_*.py
+    */tests.py
+    */__init__.py
+    */admin.py
+    */apps.py
+    */urls.py
+    */forms.py
+    */views.py
+    */usecases/*
+    */repositories/__pycache__/*
+
+[report]
+exclude_lines =
+    pragma: no cover
+    def __str__
+    if __name__ == .__main__.:
+    raise NotImplementedError

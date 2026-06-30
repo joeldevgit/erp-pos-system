@@ -1,0 +1,410 @@
+/* =====================================================
+    CARD BASE
+===================================================== */
+.card {
+    background: #ffffff;
+    color: var(--text-color);
+    border: none;
+}
+
+
+.dark-mode .card {
+    background: var(--bg-card);
+    color: var(--text-color);
+}
+
+
+
+/* =====================================================
+    PRODUCT CARD
+===================================================== */
+.inventario-card {
+    border-radius: 14px;
+}
+
+/* Additional card layout moved from template */
+.inventario-card {
+    overflow: hidden;
+    border: none;
+}
+
+.inventario-card-content{
+    display: flex;
+    gap: 18px;
+    align-items: center;
+    padding: 20px;
+}
+
+.inventario-img-box{
+    width: 120px;
+    height: 120px;
+    flex-shrink: 0;
+}
+
+.inventario-img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 20px;
+}
+
+.inventario-info{
+    flex: 1;
+}
+
+
+
+
+/* =====================================================
+    1. FilterChips
+    Scroll horizontal de filtros/acciones
+===================================================== */
+.inventario-scroll-actions {
+    display: flex;
+    gap: 10px;
+    overflow-x: auto;
+    white-space: nowrap;
+
+    position: fixed;
+    top: 72px;
+    left: 0;
+    right: 0;
+    z-index: 1999;
+
+    /* background: var(--bg-main); */
+    background: #072149;
+
+    padding: 10px 12px;
+}
+
+/* 🔥 DARK MODE NORMAL */
+.dark-mode .inventario-scroll-actions {
+    background: #072149;
+}
+
+
+
+/* 2. productGrid */
+.row.g-3 {
+    margin-top: 45px;
+}
+
+
+@media (max-width: 768px) {
+
+    /* 2. productGrid */
+    .row.g-3 {
+        margin-top: 40px;
+    }
+
+    /* 1. filterChips */
+    .inventario-scroll-actions {
+        top: 70px;
+    }
+}
+
+/* HIDE SCROLLBAR */
+.inventario-scroll-actions::-webkit-scrollbar {
+    display: none;
+}
+
+
+
+
+/* =====================================================
+    FILTER CHIP
+    Chip individual de acción/filtro
+===================================================== */
+.inventario-action-pill {
+
+    border: 1px solid rgba(0, 0, 0, .08);
+
+    border-radius: 999px;
+
+    padding: 8px 16px;
+
+    /* background: var(--bg-topbar); */
+    background: #ffffff;
+
+    color: var(--text-color);
+
+    text-decoration: none;
+
+    font-size: 14px;
+
+    flex: 0 0 auto;
+
+    transition: .3s ease;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 8px;
+
+}
+
+
+.dark-mode .inventario-action-pill {
+    background: #313264;;
+    color: var(--text-color);
+}
+
+
+
+/* ICON FILTER CHIP */
+.inventario-action-pill i {
+    color: var(--text-color);
+}
+
+
+
+/* HOVER FILTER CHIP */
+.inventario-action-pill:hover {
+    background: #ffffffbc;
+    color: var(--text-color);   
+}
+
+/* DARK */
+.dark-mode .inventario-action-pill:hover {
+    background: rgba(255,255,255,0.12);
+}
+
+
+
+.active-filter{
+    background: #775815 !important;
+    color: white !important;
+    border-color: #e67206 !important;
+}
+
+
+
+/* =====================================================
+    2. InventorytGrid
+    Grid/Listado de productos
+===================================================== */
+.inventario-inventory-grid {
+    margin-top: 50px;  
+}
+
+
+/* =====================================================
+    INVENTORY GRID CARD
+===================================================== */
+.inventario-card {
+
+    border-radius: 14px;
+}
+
+
+
+
+/* =====================================================
+    FLOAT ACTION BUTTON (FAB)
+    Botón flotante agregar  
+===================================================== */
+.btn-add-inventario {
+
+    position: fixed;
+
+    bottom: 35px;
+
+    right: 22px;
+
+    width: 70px;
+
+    height: 70px;
+
+    border-radius: 50%;
+
+    background: #c8ab5a;
+
+    color: white;
+
+    display: flex;
+
+    justify-content: center;
+
+    align-items: center;
+
+    font-size: 34px;
+
+    text-decoration: none;
+
+    box-shadow: 0 4px 10px rgba(0, 0, 0, .3);
+
+    z-index: 2000;
+}
+
+
+
+/* HOVER FLOAT BUTTON */
+.btn-add-inventario:hover {
+    color: white;
+    background: #b99b4f;
+}
+
+
+
+
+/* =====================================================
+    3. BottomNavigationBar
+    Barra navegación inferior
+===================================================== */
+.inventario-bottom-nav {
+
+    position: fixed;
+
+    bottom: 0;
+
+    left: 0;
+
+    right: 0;
+
+    height: 70px;
+
+    background: #1f2d5a;
+
+    display: flex;
+
+    justify-content: space-around;
+
+    align-items: center;
+
+    z-index: 1000;
+
+    overflow: visible;
+}
+
+
+
+
+/* =====================================================
+    NAVIGATION ITEM
+===================================================== */
+.inventario-bottom-nav>a:not(.btn-plus-nav) {
+
+    color: #ffffff;
+
+    text-decoration: none;
+
+    text-align: center;
+
+    font-size: 12px;
+
+    flex: 1;
+}
+
+
+
+
+/* NAV ICON */
+.inventario-bottom-nav a i {
+
+    display: block;
+
+    font-size: 22px;
+
+    margin-bottom: 2px;
+}
+
+
+
+
+/* ACTIVE NAV ITEM */
+.inventario-bottom-nav a.active {
+
+    color: #d4b25f;
+
+    font-weight: bold;
+}
+
+
+
+/* =====================================================
+FLOAT ACTION BUTTON NAV
+Botón plus dentro navbar inferior
+===================================================== */
+.btn-plus-nav {
+
+    position: relative;
+
+    top: -25px;
+
+    width: 55px;
+
+    height: 55px;
+
+    border-radius: 50%;
+
+    background: #c8ab5a;
+
+    color: white !important;
+
+    display: flex;
+
+    justify-content: center;
+
+    align-items: center;
+
+    font-size: 24px;
+
+    text-decoration: none;
+
+    box-shadow: 0 4px 10px rgba(0, 0, 0, .3);
+
+    z-index: 2000;
+
+    flex: none;
+}
+
+
+
+.btn-plus-nav i {
+
+    font-size: 24px;
+
+    line-height: 1;
+}
+
+
+
+/* HOVER */
+.btn-plus-nav:hover {
+
+    background: #b99b4f;
+
+    color: white !important;
+}
+
+/* =====================================================
+    DARK MODE
+===================================================== */
+.dark-mode .inventario-action-pill {
+    border-color: rgba(255, 255, 255, .08);
+}
+
+
+
+
+/* =====================================================
+    BODY LOCK
+===================================================== */
+body.sidebar-open {
+    overflow: hidden;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+

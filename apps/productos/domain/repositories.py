@@ -1,0 +1,9 @@
+from typing import Protocol
+
+from .entities import ProductoEntity
+
+
+class ProductoRepositoryPort(Protocol):
+    def crear_desde_entidad(self, entity: ProductoEntity): ...
+    def obtener_por_id(self, producto_id: int): ...
+    def guardar(self, producto, update_fields=None): ...

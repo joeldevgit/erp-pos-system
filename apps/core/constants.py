@@ -1,0 +1,6 @@
+ESTADO_ACTIVO = True
+ESTADO_INACTIVO = False
+
+ROL_ADMIN = "Admin"
+ROL_VENDEDOR = "Vendedor"
+ROL_CAJERO = "Cajero"

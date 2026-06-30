@@ -1,0 +1,49 @@
+<div class="sidebar">
+
+    <div class="sidebar-plus">
+        <div class="plus-select">
+            <i class="bi bi-shop"></i>
+            <span>Mi Negocio Plus</span>
+            <i class="bi bi-chevron-down"></i>
+        </div>
+
+        <div class="plus-icons">
+            <div class="plus-item">
+                <i class="bi bi-card-image"></i>
+                <span>Catálogo</span>
+            </div>
+
+            <div class="plus-item">
+                <i class="bi bi-database"></i>
+                <span>Backup</span>
+            </div>
+
+            <div class="plus-item">
+                <i class="bi bi-bell"></i>
+                <span>Notificación</span>
+            </div>
+        </div>
+    </div>
+
+    <a href="{% url 'inicio:dashboard' %}">
+        <i class="bi bi-house"></i>
+        INICIO
+    </a>
+
+    <hr class="my-2 opacity-25">
+
+    {% if request.user.is_superuser or request.user.groups.first.name == "Admin" or request.user.groups.first.name == "Vendedor" or request.user.groups.first.name == "Cajero" %}
+        <a href="{% url 'inventario:inventario_inicio' %}">
+            <i class="bi bi-box"></i>
+            INVENTARIO
+        </a>
+    {% endif %}
+
+    {% if request.user.is_superuser or request.user.groups.first.name == "Admin" %}
+        <a href="{% url 'usuarios:lista' %}">
+            <i class="bi bi-people"></i>
+            USUARIOS
+        </a>
+    {% endif %}
+
+</div>

@@ -1,0 +1,186 @@
+<div class="topbar">
+
+    <!-- IZQUIERDA -->
+    <div class="d-flex align-items-center gap-3">
+
+        {% if navbar_show_sidebar_toggle %}
+        <!-- ICONO SIDEBAR -->
+        <button type="button" class="topbar-menu">
+            <i class="bi bi-list fs-4 text-white"></i>
+        </button>
+        {% endif %}
+
+        {% if navbar_show_back_button %}
+        <!-- FLECHA BACK -->
+        <div class="top-action-left">
+            <a href="{{ navbar_back_url }}"
+               class="btn btn-outline-secondary rounded-circle d-flex align-items-center justify-content-center btn-top">
+                <i class="bi bi-arrow-left"></i>
+            </a>
+        </div>
+        {% endif %}
+
+        <!-- TITULO Y SUBTITULO -->
+        <div class="topbar-title" id="topbarTitle">
+            <h5 class="mb-0">{{ titulo }}</h5>
+
+            {% if navbar_show_search_area %}
+            <p class="mb-0">{{ titulo }} activos</p>
+            {% endif %}
+        </div>
+
+    </div>
+
+
+    <!-- DERECHA -->
+    <div class="d-flex align-items-center gap-2 ms-auto">
+
+        {% if navbar_show_merma_create_save %}
+        <button type="submit"
+                form="form-merma"
+                class="btn btn-success rounded-circle d-flex align-items-center justify-content-center save-btn">
+            <i class="bi bi-check-lg"></i>
+        </button>
+
+        {% elif navbar_show_topbar_actions %}
+        <div class="topbar-actions">
+
+            {% if navbar_show_copy_button %}
+            <button type="button"
+                    class="btn-top"
+                    data-bs-toggle="modal"
+                    data-bs-target="#modalCopiarProducto">
+                <i class="bi bi-copy"></i>
+            </button>
+            {% endif %}
+
+            {% if navbar_show_form_item_save %}
+            <button type="submit" form="form-item" class="btn-top">
+                <i class="bi bi-floppy"></i>
+            </button>
+            {% endif %}
+
+            {% if navbar_show_upload_button %}
+            <button type="button" class="btn-top">
+                <i class="bi bi-upload"></i>
+            </button>
+            {% endif %}
+
+            {% if navbar_show_form_producto_save %}
+            <button type="submit" form="form-producto" class="btn-top">
+                <i class="bi bi-list"></i>
+            </button>
+            {% endif %}
+
+            {% if navbar_show_delete_button %}
+            <button type="button" class="btn-top text-danger" onclick="eliminarProducto()">
+                <i class="bi bi-trash"></i>
+            </button>
+            {% endif %}
+
+        </div>
+        {% endif %}
+
+
+        {% if navbar_show_search_area %}
+        <div class="inventario-top-actions">
+            <form method="GET" id="searchForm" class="search-hidden">
+                <input type="hidden" name="seccion" value="{{ seccion }}">
+
+                <div class="search-box">
+                    <input type="text"
+                        name="q"
+                        value="{{ request.GET.q }}"
+                        class="inventario-search"
+                        placeholder="Nombre / Clave"
+                        id="searchInput"
+                        autocomplete="off">
+
+                    <button type="button" class="btn-filter" id="btnCloseSearch">
+                        <i class="bi bi-x-lg"></i>
+                    </button>
+                </div>
+            </form>
+
+            <button type="button" class="btn-filter" id="btnSearch">
+                <i class="bi bi-search"></i>
+            </button>
+        </div>
+
+        <button type="button" class="btn-filter" data-bs-toggle="modal" data-bs-target="#modalFiltrosInventario">
+            <i class="bi bi-funnel"></i>
+        </button>
+        {% endif %}
+ 
+
+        <span id="offline-status-indicator" class="badge bg-success text-white me-2">
+            En línea
+        </span>
+
+        <button id="themeToggle" class="btn btn-sm btn-outline-secondary">🌙</button>
+
+
+        {% if navbar_show_user_menu %}
+        <div class="dropdown">
+            <a class="d-flex align-items-center text-decoration-none dropdown-toggle user-menu"
+               href="#"
+               role="button"
+               data-bs-toggle="dropdown"
+               aria-expanded="false">
+
+                <img src="https://i.pravatar.cc/30" class="rounded-circle me-2">
+
+                <span class="d-none d-md-inline">
+                    {{ user.username }}
+                </span>
+            </a>
+
+            <ul class="dropdown-menu dropdown-menu-end shadow">
+
+                <li class="px-3 py-2">
+                    <strong>{{ user.username }}</strong><br>
+                    <small class="text-muted">Usuario</small>
+                </li>
+
+                <li><hr class="dropdown-divider"></li>
+
+                <li>
+                    <a class="dropdown-item" href="#">
+                        <i class="bi bi-person"></i> Perfil
+                    </a>
+                </li>
+
+                <li>
+                    <a class="dropdown-item" href="#">
+                        <i class="bi bi-gear"></i> Configuración
+                    </a>
+                </li>
+
+                <li><hr class="dropdown-divider"></li>
+
+                <li>
+                    <form id="logoutForm" method="post" action="{% url 'usuarios:logout' %}">
+                        {% csrf_token %}
+
+                        <button type="button" id="logoutBtn" class="dropdown-item text-danger">
+                            <i class="bi bi-box-arrow-right"></i>
+                            Cerrar sesión
+                        </button>
+                    </form>
+                </li>
+
+                <li>
+                    <button type="button" id="themeToggleMobile" class="dropdown-item">
+                        <i class="bi bi-moon"></i>
+                        Cambiar tema
+                    </button>
+                </li>
+
+            </ul>
+
+        </div>
+        {% endif %}
+
+    </div>
+    
+</div>

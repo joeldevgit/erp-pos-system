@@ -1,0 +1,15 @@
+.content {
+    width: 100%;
+    min-height: 100vh;
+    padding: 14px;
+    padding-top: 80px;
+
+    background: var(--bg-main);
+    color: var(--text-color);
+
+    transition: padding var(--transition-base);
+}
+
+body.sidebar-open {
+    overflow: hidden;
+}

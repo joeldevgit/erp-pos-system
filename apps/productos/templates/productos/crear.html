@@ -1,0 +1,529 @@
+{% extends 'base_admin.html' %}
+{% load static %}
+
+{% block content %}
+
+<link rel="stylesheet" href="{% static 'productos/css/crear.css' %}">
+
+
+<div class="container px-2">
+
+    <form method="POST"
+          enctype="multipart/form-data"
+          id="form-item">
+
+        {% csrf_token %}
+
+
+        {% if form.errors %}
+        <div class="alert alert-danger">
+            {{ form.errors }}
+        </div>
+        {% endif %}
+
+        {% if precios_formset.errors %}
+        <div class="alert alert-danger">
+            {{ precios_formset.errors }}
+        </div>
+        {% endif %}
+
+        {% if caducidades_formset.errors %}
+        <div class="alert alert-danger">
+            {{ caducidades_formset.errors }}
+        </div>
+        {% endif %}
+
+        
+
+        <!-- CARD 1 -->
+        <div class="card card-modern mb-3">
+
+            <span class="text-info ps-3">
+                Campos Obligatorios
+            </span>
+
+            <div class="card-body p-3">
+
+                <div class="row g-3">
+
+                    <div class="col-md-12">
+                        <label class="form-label">
+                            Nombre
+                        </label>
+                        {{ form.nombre }}
+                    </div>
+
+                    <div class="col-md-6">
+                        <label class="form-label">
+                            Precio compra
+                        </label>
+                        {{ form.precio_compra }}
+                    </div>
+
+                    <div class="col-md-6">
+                        <label class="form-label">
+                            Precio venta
+                        </label>
+                        {{ form.precio_venta }}
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- CARD 2 IMAGEN -->
+        <div class="card card-modern mb-3">
+
+            <div class="card-body p-3">
+
+                <div class="upload-box">
+
+                    <!-- PREVIEW -->
+                    <img id="preview"
+                         class="preview d-none">
+
+                    <!-- PLACEHOLDER -->
+                    <img id="placeholder"
+                         class="upload-placeholder"
+                         src="https://cdn-icons-png.flaticon.com/512/1829/1829586.png">
+
+                    <!-- INPUT -->
+                    <input type="file"
+                        id="id_imagen"
+                        name="imagen"
+                        accept="image/*"
+                        hidden>
+
+                    <!-- BOTONES -->
+                    <div class="upload-actions">
+
+                        <button type="button"
+                                class="circle-btn"
+                                onclick="eliminarImagen()">
+                            🗑
+                        </button>
+
+                        <button type="button"
+                                class="circle-btn"
+                                onclick="document.getElementById('id_imagen').click()">
+                            🖼
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- CARD 3 -->
+        <div class="card card-modern mb-3">
+
+            <div class="card-body p-3">
+
+                <div class="row g-3">
+
+                    <div class="col-md-12">
+                        <label class="form-label">
+                            Código
+                        </label>
+                        {{ form.codigo }}
+                    </div>
+
+                    <div class="col-md-6">
+                        <label class="form-label">
+                            Stock
+                        </label>
+                        {{ form.stock }}
+                    </div>
+
+                    <div class="col-md-6">
+                        <label class="form-label">
+                            Stock mínimo
+                        </label>
+                        {{ form.stock_minimo }}
+                    </div>
+
+                    <!-- UNIDAD -->
+                    <div class="col-md-12">
+
+                        <div class="d-flex justify-content-between align-items-center">
+
+                            <label class="form-label mb-0">
+                                Unidad
+                            </label>
+
+                            <button type="button"
+                                    class="btn btn-sm btn-primary"
+                                    data-bs-toggle="modal"
+                                    data-bs-target="#modalUnidad">
+                                +
+                            </button>
+
+                        </div>
+
+                        {{ form.unidad }}
+
+                    </div>
+
+                    <!-- CATEGORIA -->
+                    <div class="col-md-12">
+
+                        <div class="d-flex justify-content-between align-items-center">
+
+                            <label class="form-label mb-0">
+                                Categoría
+                            </label>
+
+                            <button type="button"
+                                    class="btn btn-sm btn-primary"
+                                    data-bs-toggle="modal"
+                                    data-bs-target="#modalCategoria">
+                                +
+                            </button>
+
+                        </div>
+
+                        {{ form.categoria }}
+
+                    </div>
+
+                    <!-- INFO -->
+                    <div class="col-md-12">
+
+                        <label class="form-label">
+                            Información adicional
+                        </label>
+
+                        {{ form.informacion_adicional }}
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- PRECIOS ADICIONALES -->
+        <div class="card card-modern mb-3">
+
+            <div class="card-body p-3">
+
+                <div class="d-flex justify-content-between align-items-center mb-3">
+
+                    <label class="form-label">
+                        Precios Adicionales
+                    </label>
+                    <button type="button"
+                            class="btn btn-primary"
+                            onclick="agregarPrecio()">
+                        +
+                    </button>
+
+                </div>
+
+                {{ precios_formset.management_form }}
+
+                <div id="precios-container">
+
+                    {% for f in precios_formset %}
+
+                    <div class="border rounded p-3 mb-2">
+
+                        <div class="row">
+
+                            <div class="col-md-6">
+                                {{ f.nombre }}
+                            </div>
+
+                            <div class="col-md-6">
+                                {{ f.precio }}
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                    {% endfor %}
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- CADUCIDADES -->
+        <div class="card card-modern mb-3">
+
+            <div class="card-body p-3">
+
+                <div class="d-flex justify-content-between align-items-center mb-3">
+
+                    <label class="form-label">
+                        Caducidades
+                    </label>
+
+                    <button type="button"
+                            class="btn btn-success"
+                            onclick="agregarCaducidad()">
+                        +
+                    </button>
+
+                </div>
+
+                {{ caducidades_formset.management_form }}
+
+                <div id="caducidades-container">
+
+                    {% for f in caducidades_formset %}
+
+                    <div class="border rounded p-3 mb-2">
+
+                        <div class="row g-2">
+
+                            <div class="col-md-4">
+                                {{ f.lote }}
+                            </div>
+
+                            <div class="col-md-4">
+                                {{ f.fecha_caducidad }}
+                            </div>
+
+                            <div class="col-md-4">
+                                {{ f.informacion }}
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                    {% endfor %}
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+
+
+        <!-- MODAL -->
+        <div class="modal fade" id="modalUnidad" tabindex="-1">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+
+
+                    <!-- LISTA DE UNIDADES -->
+                    <div class="p-3">
+                        
+                        <div class="modal-header">
+                            <h5 class="modal-title">Lista de Unidades</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                        </div>
+
+
+                        <div id="lista-unidades" class="list-group mt-2" style="max-height:250px; overflow-y:auto;">
+                            {% for unidad in form.fields.unidad.queryset %}
+                                <button type="button"
+                                        class="list-group-item list-group-item-action"
+                                        onclick="seleccionarUnidad('{{ unidad.id }}')">
+                                    {{ unidad.nombre }}
+                                </button>
+                            {% empty %}
+                                <div class="text-muted small">
+                                    No hay unidades creadas.
+                                </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+
+                    <div class="modal-header">
+                        <h5 class="modal-title">Crear unidad</h5>
+                    </div>
+
+                    <div class="modal-body">
+                        <label class="form-label">Nombre de unidad</label>
+                        <input type="text"
+                            id="nueva-unidad"
+                            class="form-control text-secondary"
+                            placeholder="Ej: Caja, Unidad, Litro">
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="button"
+                                class="btn btn-secondary"
+                                data-bs-dismiss="modal">
+                            Cancelar
+                        </button>
+
+                        <button type="button"
+                                class="btn btn-primary"
+                                onclick="guardarUnidad()">
+                            Guardar
+                        </button>
+                    </div>
+
+                    
+
+                    
+
+                </div>
+            </div>
+        </div>
+
+
+
+        <!-- MODAL CATEGORIA -->
+        <div class="modal fade" id="modalCategoria" tabindex="-1">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+
+                    <!-- LISTA -->
+                    <div class="p-3">
+
+                        <div class="modal-header">
+                            <h5 class="modal-title">
+                                Lista de Categorías
+                            </h5>
+
+                            <button type="button"
+                                    class="btn-close"
+                                    data-bs-dismiss="modal">
+                            </button>
+                        </div>
+
+                        <div id="lista-categorias"
+                            class="list-group mt-2"
+                            style="max-height:250px; overflow-y:auto;">
+
+                            {% for categoria in form.fields.categoria.queryset %}
+
+                                <button type="button"
+                                        class="list-group-item list-group-item-action"
+                                        onclick="seleccionarCategoria('{{ categoria.id }}')">
+
+                                    {{ categoria.nombre }}
+
+                                </button>
+
+                            {% empty %}
+
+                                <div class="text-muted small">
+                                    No hay categorías creadas.
+                                </div>
+
+                            {% endfor %}
+
+                        </div>
+
+                    </div>
+
+                    <!-- CREAR -->
+                    <div class="modal-header">
+                        <h5 class="modal-title">
+                            Crear categoría
+                        </h5>
+                    </div>
+
+                    <div class="modal-body">
+
+                        <label class="form-label">
+                            Nombre de categoría
+                        </label>
+
+                        <input type="text"
+                            id="nueva-categoria"
+                            class="form-control text-secondary"
+                            placeholder="Ej: Bebidas, Lácteos">
+
+                    </div>
+
+                    <div class="modal-footer">
+
+                        <button type="button"
+                                class="btn btn-secondary"
+                                data-bs-dismiss="modal">
+                            Cancelar
+                        </button>
+
+                        <button type="button"
+                                class="btn btn-primary"
+                                onclick="guardarCategoria()">
+
+                            Guardar
+
+                        </button>
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+
+        <!-- MODAL COPY PRODUCT -->
+        <div class="modal fade" id="modalCopiarProducto" tabindex="-1">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+
+                    <div class="modal-header">
+                        <h5 class="modal-title">Copiar producto registrado</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                    </div>
+
+                    <div class="modal-body">
+
+                        <input type="text"
+                            id="buscar-producto"
+                            class="form-control mb-3"
+                            placeholder="Buscar producto...">
+
+                        <div class="list-group" id="lista-productos" style="max-height:300px; overflow-y:auto;">
+
+                            {% for producto in productos %}
+                                <button type="button"
+                                        class="list-group-item list-group-item-action producto-item"
+
+                                        data-nombre="{{ producto.nombre }}"
+                                        data-precio-compra="{{ producto.precio_compra }}"
+                                        data-codigo="{{ producto.codigo }}"
+                                        data-stock="{{ producto.stock }}"
+                                        data-stock-minimo="{{ producto.stock_minimo }}"
+                                        data-unidad="{{ producto.unidad_id }}"
+                                        data-categoria="{{ producto.categoria_id }}"
+                                        data-info="{{ producto.informacion_adicional|default:'' }}">
+                                    {{ producto.nombre }}
+                                </button>
+                            {% empty %}
+                                <div class="text-muted small">
+                                    No hay productos registrados.
+                                </div>
+                            {% endfor %}
+
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+    </form>
+
+</div>
+
+
+<script>
+    window.PRODUCTOS_URLS = {
+        crearUnidadAjax: "{% url 'productos:crear_unidad_ajax' %}",
+        crearCategoriaAjax: "{% url 'productos:crear_categoria_ajax' %}"
+    };
+</script>
+<script src="{% static 'productos/js/crear.js' %}"></script>
+<script src="{% static 'js/offline/products-offline.js' %}"></script>
+{% endblock %}

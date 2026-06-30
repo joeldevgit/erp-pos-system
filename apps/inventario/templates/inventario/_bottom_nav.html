@@ -1,0 +1,42 @@
+<div class="inventario-bottom-nav">
+
+    <a href="{% url 'inventario:inventario_inicio' %}?seccion=producto"
+        class="{% if seccion == 'producto' %}active{% endif %}">
+        <i class="bi bi-box-seam"></i>
+        <span>Producto</span>
+    </a>
+
+    <a href="{% url 'inventario:inventario_inicio' %}?seccion=materia_prima"
+        class="{% if seccion == 'materia_prima' %}active{% endif %}">
+        <i class="bi bi-box-seam"></i>
+        <span>Materia Prima</span>
+    </a>
+
+
+    <a href="
+        {% if seccion == 'producto' %}
+            {% url 'productos:producto_create' %}
+
+        {% elif seccion == 'servicio' %}
+            {% url 'servicios:servicio_create' %}
+
+        {% elif seccion == 'manufactura' %}
+            {% url 'manufactura:manufactura_create' %}
+        {% endif %}
+    " class="btn-plus-nav">
+        <i class="bi bi-plus-lg"></i>
+    </a>
+
+    <a href="{% url 'inventario:inventario_inicio' %}?seccion=servicio"
+        class="{% if seccion == 'servicio' %}active{% endif %}">
+        <i class="bi bi-briefcase"></i>
+        <span>Servicio</span>
+    </a>
+
+    <a href="{% url 'inventario:inventario_inicio' %}?seccion=manufactura"
+        class="{% if seccion == 'manufactura' %}active{% endif %}">
+        <i class="bi bi-tools"></i>
+        <span>Manufactura</span>
+    </a>
+
+</div>

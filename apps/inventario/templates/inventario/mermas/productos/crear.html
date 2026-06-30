@@ -1,0 +1,218 @@
+{% extends 'base_admin.html' %}
+{% load static %}
+{% load widget_tweaks %}
+
+{% block content %}
+
+<style>
+.merma-card{
+    background: var(--bg-card);
+    border-radius: 16px;
+    padding: 18px;
+    max-width: 700px;
+    margin: auto;
+    overflow: visible;
+    color: var(--text-color);
+}
+
+.producto-row{
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+.producto-input{
+    flex: 1;
+    width: 100%;
+    min-width: 0;
+    height: 50px;
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    font-size: 18px;
+    padding: 0 15px;
+    background: var(--bg-main);
+    color: var(--text-color);
+}
+
+.scan-btn{
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background: #0d99f2;
+    color: white;
+    border: none;
+    font-size: 18px;
+    flex-shrink: 0;
+}
+
+.date-row{
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 25px;
+    flex-wrap: wrap;
+}
+
+.pill{
+    background: var(--hover-bg);
+    color: var(--text-color);
+    border-radius: 20px;
+    padding: 8px 18px;
+    font-size: 14px;
+    border: 1px solid var(--border-color);
+}
+
+.form-line{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 18px;
+    font-size: 18px;
+    color: var(--text-color);
+    gap: 15px;
+}
+
+.cantidad-input{
+    width: 140px;
+    height: 45px;
+    border: 1px solid var(--border-color);
+    border-radius: 10px;
+    background: var(--bg-main);
+    color: var(--text-color);
+    padding: 0 14px;
+    text-align: right;
+    font-size: 16px;
+}
+
+.total-row{
+    margin-top: 35px;
+    margin-bottom: 25px;
+    font-size: 24px;
+    display: flex;
+    justify-content: space-between;
+    color: var(--text-color);
+}
+
+.motivo-input{
+    width: 100%;
+    min-height: 110px;
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    background: var(--bg-main);
+    color: var(--text-color);
+    padding: 14px;
+    font-size: 15px;
+    resize: none;
+}
+
+.producto-input:focus,
+.cantidad-input:focus,
+.motivo-input:focus{
+    outline: none;
+    border-color: #4d7dff;
+    box-shadow: 0 0 0 3px rgba(77,125,255,.15);
+}
+
+.motivo-input::placeholder{
+    color: var(--text-sidebar);
+}
+
+@media (max-width: 600px){
+    .producto-input{
+        font-size: 16px;
+    }
+
+    .form-line{
+        font-size: 16px;
+    }
+
+    .total-row{
+        font-size: 20px;
+    }
+
+    .cantidad-input{
+        width: 110px;
+    }
+}
+</style>
+
+<form id="form-merma" method="POST">
+    {% csrf_token %}
+
+    <br>
+
+    <div class="merma-card">
+
+        <div class="producto-row">
+            {{ form.producto|add_class:"producto-input" }}
+
+            <button type="button" class="scan-btn">
+                <i class="bi bi-upc-scan"></i>
+            </button>
+        </div>
+
+        <div class="date-row">
+            <div class="pill">{{ fecha_actual|date:"d M. Y" }}</div>
+            <div class="pill">{{ fecha_actual|time:"h:i a" }}</div>
+        </div>
+
+        <div class="form-line">
+            <label>Costo Promedio $</label>
+            <span id="costo-promedio">500.00</span>
+        </div>
+
+        <div class="form-line">
+            <label>#</label>
+            {{ form.cantidad|add_class:"cantidad-input" }}
+        </div>
+
+        <div class="total-row">
+            <span>Total $</span>
+            <strong id="total-merma">500.00</strong>
+        </div>
+
+        {{ form.motivo|add_class:"motivo-input" }}
+
+    </div>
+</form>
+
+
+
+
+
+
+{{ productos_costos|json_script:"productos-costos" }}
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    const productoSelect = document.getElementById("id_producto");
+    const cantidadInput = document.getElementById("id_cantidad");
+    const costoSpan = document.getElementById("costo-promedio");
+    const totalSpan = document.getElementById("total-merma");
+
+    const costos = JSON.parse(document.getElementById("productos-costos").textContent);
+
+    function calcularTotal() {
+        const productoId = productoSelect.value;
+        const costo = parseFloat(costos[productoId] || 0);
+        const cantidad = parseFloat(cantidadInput.value || 0);
+
+        costoSpan.textContent = costo.toFixed(2);
+        totalSpan.textContent = (costo * cantidad).toFixed(2);
+    }
+
+    productoSelect.addEventListener("change", calcularTotal);
+    cantidadInput.addEventListener("input", calcularTotal);
+
+    calcularTotal();
+});
+</script>
+
+<script src="{% static 'js/offline/inventario-offline.js' %}"></script>
+
+{% endblock %}
+
+
+

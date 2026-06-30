@@ -1,0 +1,71 @@
+<!-- MODAL FILTER GLOBAL-->
+<div class="modal fade" id="modalFiltrosInventario" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <h5 class="modal-title">Filtrar inventario</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+
+            <div class="modal-body">
+
+                <div class="mb-3">
+                    <label class="form-label">Ordenar</label>
+                    <select class="form-select" id="ordenarInventario">
+                        <option value="">Ordenar</option>
+                        <option value="nombre_asc">Nombre A-Z</option>
+                        <option value="nombre_desc">Nombre Z-A</option>
+                        <option value="stock_asc">Stock menor a mayor</option>
+                        <option value="stock_desc">Stock mayor a menor</option>
+                        <option value="precio_asc">Precio menor a mayor</option>
+                        <option value="precio_desc">Precio mayor a menor</option>
+                    </select>
+                </div>
+
+                <button
+                    type="button"
+                    class="btn btn-outline-primary w-100"
+                    id="mostrarTodosInventario">
+                    Mostrar todos los registros
+                </button>
+
+                <div class="mb-3">
+                    <label class="form-label">Filtro por categoría</label>
+                    <select class="form-select" id="categoriaInventario">
+                        <option value="">Todas las categorías</option>
+                    </select>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Filtro por unidad</label>
+                    <select class="form-select" id="unidadInventario">
+                        <option value="">Todas las unidades</option>
+                    </select>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Filtro por información</label>
+
+                    <input
+                        type="text"
+                        class="form-control"
+                        id="infoInventario"
+                        placeholder="Buscar información...">
+
+                    <div id="contenedorBtnFiltrarInfo" class="mt-2 d-none">
+                        <button
+                            type="button"
+                            class="btn btn-primary w-100"
+                            id="btnFiltrarInfo">
+                            Filtrar
+                        </button>
+                    </div>
+                </div>
+
+            </div>
+
+
+        </div>
+    </div>
+</div>

@@ -1,0 +1,242 @@
+{% extends 'base_admin.html' %}
+{% load static %}
+
+{% block title %}Inventario{% endblock %}
+
+
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'inventario/css/inventario.css' %}">
+{% endblock %}
+
+
+
+{% block content %}
+<div class="container-fluid pb-5 mb-5 px-0">
+
+    <!-- =====================================================
+        1. FilterChips
+    ===================================================== -->
+    <div class="inventario-scroll-actions">
+
+        {% if seccion == 'producto' %}
+        <a href="#" class="inventario-action-pill" title="Escanear código de barras">
+            <i class="bi bi-upc-scan"></i>
+        </a>
+
+        <a href="{% url 'inventario:merma_list' %}" class="inventario-action-pill">
+            <i class="bi bi-exclamation-triangle"></i>
+            Merma
+        </a>
+
+        <a href="#" class="inventario-action-pill" id="btnCantidadMinima">
+            <i class="bi bi-exclamation-triangle"></i>
+            Cantidad Minima
+        </a>
+
+        <a href="#" class="inventario-action-pill">
+            <i class="bi bi-exclamation-triangle"></i>
+            Exportar
+        </a>
+
+        <a href="#" class="inventario-action-pill">
+            <i class="bi bi-exclamation-triangle"></i>
+            Importar
+        </a>
+        {% endif %}
+
+
+
+
+        {% if seccion == 'servicio' %}
+        <a href="#" class="inventario-action-pill" title="Escanear código de barras">
+            <i class="bi bi-upc-scan"></i>
+        </a>
+
+        <a href="#" class="inventario-action-pill">
+            <i class="bi bi-exclamation-triangle"></i>
+            Exportar
+        </a>
+
+        <a href="#" class="inventario-action-pill">
+            <i class="bi bi-exclamation-triangle"></i>
+            Importar
+        </a>
+        {% endif %}
+
+
+        {% if seccion == 'manufactura' %}
+        <a href="#" class="inventario-action-pill" title="Escanear código de barras">
+            <i class="bi bi-upc-scan"></i>
+        </a>
+
+        <a href="#" class="inventario-action-pill">
+            <i class="bi bi-exclamation-triangle"></i>
+            Exportar
+        </a>
+        {% endif %}
+
+    </div>
+
+
+    <!-- =====================================================
+        2. InventoryGrid [Grid/Listado de inventario]
+    ===================================================== -->
+    <div class="inventario-inventory-grid">
+
+        <div class="row g-3">
+
+            {% for producto in productos %}
+
+            {% if seccion == 'producto' %}
+            {% url 'productos:producto_edit' producto.id as edit_url %}
+
+            {% elif seccion == 'servicio' %}
+            {% url 'servicios:servicio_edit' producto.id as edit_url %}
+
+            {% elif seccion == 'manufactura' %}
+            {% url 'manufactura:manufactura_edit' producto.id as edit_url %}
+            {% endif %}
+
+
+            <div class="col-12 col-sm-6 col-md-4 col-lg-3 inventario-item" data-codigo="
+                    {% if seccion == 'manufactura' %}
+                        {{ producto.producto_final.codigo|lower }}
+                    {% else %}
+                        {{ producto.codigo|lower }}
+                    {% endif %}
+                " data-nombre="
+                    {% if seccion == 'manufactura' %}
+                        {{ producto.producto_final.nombre|lower }}
+                    {% else %}
+                        {{ producto.nombre|lower }}
+                    {% endif %}
+                " data-categoria="{{ producto.categoria.nombre|default:'' }}"
+                data-unidad="{{ producto.unidad.nombre|default:'' }}" data-estado="{{ producto.estado|yesno:'1,0' }}"
+                data-info="{{ producto.informacion_adicional|default:''|lower }}"
+                data-stock="{{ producto.stock|default:0 }}" data-precio="{{ producto.precio_venta|default:0 }}">
+
+
+                <a href="{{ edit_url }}" class="text-decoration-none text-dark">
+
+                    <div class="card shadow-sm inventario-card">
+
+                        <div class="inventario-card-content">
+
+                            <!-- IMAGEN -->
+                            <div class="inventario-img-box">
+
+                                {% if producto.imagen %}
+                                <img src="{{ producto.imagen.url }}" class="inventario-img">
+                                {% else %}
+                                <img src="{% static 'img/no-image.png' %}" class="inventario-img">
+                                {% endif %}
+
+                            </div>
+
+                            <!-- CONTENIDO -->
+                            <div class="inventario-info">
+
+                                <div class="d-flex justify-content-between">
+
+                                    <div>
+                                        <div class="mb-2">
+                                            <i class="bi bi-key-fill"></i>
+
+                                            <strong title="{{ producto.codigo }}" style="font-size: 11px;">
+                                                {{ producto.codigo|slice:":4" }}...
+                                            </strong>
+                                        </div>
+
+                                        <h5 style="font-size: 14px;">{{ producto.nombre }}</h5>
+
+                                    </div>
+
+                                    <div class="text-end">
+
+                                        <strong class="fs-5">
+                                            ${{ producto.precio_venta }}
+                                        </strong>
+
+                                        <br>
+
+                                        <span class="text-success fw-bold">
+                                            #{{ producto.stock }}
+                                        </span>
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </a>
+
+            </div>
+            {% empty %}
+            <div class="col-12">
+                <div class="alert alert-info">
+                    No hay registros en {{ titulo }}.
+                </div>
+            </div>
+            {% endfor %}
+
+        </div>
+
+
+        {% if productos.has_other_pages %}
+        <nav class="mt-4">
+            <ul class="pagination justify-content-center">
+
+                {% if productos.has_previous %}
+                <li class="page-item">
+                    <a class="page-link"
+                        href="?seccion={{ seccion }}&q={{ q }}&page={{ productos.previous_page_number }}">
+                        Anterior
+                    </a>
+                </li>
+                {% endif %}
+
+                <li class="page-item active">
+                    <span class="page-link">
+                        {{ productos.number }}
+                        de
+                        {{ productos.paginator.num_pages }}
+                    </span>
+                </li>
+
+                {% if productos.has_next %}
+                <li class="page-item">
+                    <a class="page-link" href="?seccion={{ seccion }}&q={{ q }}&page={{ productos.next_page_number }}">
+                        Siguiente
+                    </a>
+                </li>
+                {% endif %}
+
+            </ul>
+        </nav>
+        {% endif %}
+
+
+    </div>
+
+
+    {% include 'inventario/_bottom_nav.html' %}
+
+</div>
+{% endblock %}
+
+
+{% block modals %}
+{% include 'inventario/_modals.html' %}
+{% endblock %}
+
+
+
+{% block extra_js %}
+<script src="{% static 'inventario/js/inventario.js' %}"></script>
+{% endblock %}
