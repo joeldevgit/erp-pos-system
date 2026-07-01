@@ -10,7 +10,7 @@ urlpatterns = [
     path("estado/<int:id>/", views.usuario_estado, name="estado"),
 
 
-    path("login/", views.login_view, name="login"),
+    path("login/", views.login_view, name="login"),  # POR ORDEN DE LOGIN_URL = "..."
     path("logout/", views.logout_view, name="logout"),
 
 ]

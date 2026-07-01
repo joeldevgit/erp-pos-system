@@ -10,18 +10,14 @@ class Command(BaseCommand):
 
         grupos = [
             "Admin",
-            "Cajero",
-            "Vendedor",
+            "Empleado",
         ]
 
         for nombre in grupos:
-
-            Group.objects.get_or_create(
-                name=nombre
-            )
+            Group.objects.get_or_create(name=nombre)
 
         self.stdout.write(
             self.style.SUCCESS(
-                "Grupos creados correctamente"
+                "Grupos creados correctamente."
             )
         )

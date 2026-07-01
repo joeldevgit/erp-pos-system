@@ -1,0 +1,130 @@
+ html,
+ body {
+     width: 100%;
+     min-height: 100%;
+     overflow-x: hidden;
+ }
+
+ body {
+     min-height: 100svh;
+     background:
+         radial-gradient(circle at top left, rgba(13, 110, 253, 0.25), transparent 35%),
+         linear-gradient(135deg, #0f172a, #111827, #020617);
+     color: #fff;
+ }
+
+ .login-wrapper {
+     min-height: 100svh;
+     display: flex;
+     align-items: center;
+     /* vertical */
+     justify-content: center;
+     /* horizontal */
+     padding: 2rem 0;
+ }
+
+ .brand-title {
+     font-size: 3.4rem;
+     font-weight: 800;
+     color: #4f8cff;
+     letter-spacing: -1px;
+ }
+
+ .brand-subtitle {
+     font-size: 1.3rem;
+     color: #d1d5db;
+     max-width: 460px;
+ }
+
+ .login-card {
+     background: #111827;
+     border: 1px solid rgba(255, 255, 255, 0.08);
+     border-radius: 18px;
+     box-shadow: 0 25px 60px rgba(0, 0, 0, 0.45);
+ }
+
+ .form-control {
+     background-color: #1f2937;
+     border: 1px solid #374151;
+     color: #fff;
+     height: 50px;
+     border-radius: 10px;
+     font-size: 16px;
+ }
+
+ .form-control:focus {
+     background-color: #1f2937;
+     color: #fff;
+     border-color: #4f8cff;
+     box-shadow: 0 0 0 0.25rem rgba(79, 140, 255, 0.2);
+ }
+
+ .form-control::placeholder {
+     color: #9ca3af;
+ }
+
+ .btn-login {
+     height: 50px;
+     border-radius: 10px;
+     font-weight: 700;
+     background: #1877f2;
+     border: none;
+ }
+
+ .btn-login:hover {
+     background: #166fe5;
+ }
+
+ .small-text {
+     color: #9ca3af;
+     font-size: 0.9rem;
+ }
+
+ .divider {
+     border-top: 1px solid rgba(255, 255, 255, 0.12);
+     margin: 1.5rem 0;
+ }
+
+ @media (max-width: 768px) {
+     body {
+         min-height: 100svh;
+         overflow-y: auto;
+     }
+
+     .login-wrapper {
+         min-height: auto;
+         padding: 1rem 0.75rem;
+     }
+
+     .row {
+         margin-left: 0;
+         margin-right: 0;
+     }
+
+     .brand-title {
+         font-size: 2rem;
+         text-align: center;
+         margin-top: 0.5rem;
+     }
+
+     .brand-subtitle {
+         font-size: 0.95rem;
+         text-align: center;
+         margin: 0 auto 0.75rem;
+     }
+
+     .login-card {
+         margin-top: 0.5rem;
+         padding: 1.25rem !important;
+     }
+
+     .form-control,
+     .btn-login {
+         height: 46px;
+         font-size: 16px;
+     }
+
+     .divider {
+         margin: 1rem 0;
+     }
+ }

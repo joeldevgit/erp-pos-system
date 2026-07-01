@@ -4,22 +4,36 @@ from django.shortcuts import redirect
 
 
 PERMISOS_POR_ROL = {
+
     "Admin": [
         "inventario.ver",
+        "inventario.mermas.ver",
+        "inventario.mermas.crear",
+        "inventario.stock.entrada",
+        "inventario.stock.salida",
+
+        "productos.ver",
         "productos.crear",
         "productos.editar",
         "productos.eliminar",
         "productos.cambiar_estado",
-        "inventario.mermas.ver",
-        "inventario.mermas.crear"
+
+
+        # aquí irán ventas, compras, clientes, etc.
     ],
-    "Vendedor": [
+
+    "Empleado": [
         "inventario.ver",
+        "inventario.mermas.ver",
+        "inventario.mermas.crear",
+        "inventario.stock.entrada",
+        "inventario.stock.salida",
+
+        "productos.ver",
         "productos.crear",
         "productos.editar",
-    ],
-    "Cajero": [
-        "inventario.ver",
+
+        # sin permisos de usuarios
     ],
 }
 
