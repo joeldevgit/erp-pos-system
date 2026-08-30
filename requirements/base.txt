@@ -5,8 +5,6 @@ django-widget-tweaks
 
 
 psycopg[binary]
-dj-database-url
-
 django-redis
 
 Django>=5.2,<6.0
