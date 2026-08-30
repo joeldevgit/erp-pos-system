@@ -5,7 +5,7 @@ __pycache__/
 *.pyd
 
 # Base de datos local
-db.sqlite3
+# db.sqlite3
 
 # Variables de entorno
 .env
